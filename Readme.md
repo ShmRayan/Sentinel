@@ -2,7 +2,7 @@
 
 A real-time, event-driven fortress designed to neutralize cyber-threats in milliseconds. Built with Solace Event Mesh, Agent AI (Llama 3), and Next.js.
 
-✨ [Live Mission Control](https://sentinel-dashboard.vercel.app)
+✨ [Live Mission Control](https://sentinel-dashb.vercel.app)
 
 ![Sentinel Architecture](architecture.png)
 
