@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  solace:
+    container_name: solace
+    image: solace/solace-pubsub-standard:latest
+    shm_size: 4g
+    user: "0:0"
+    privileged: true
+    ports:
+      - "9090:8080"
+      - "55555:55555"
+      - "1884:1883"
+      - "8001:8000"
+    environment:
+      - username_admin_globalaccesslevel=admin
+      - username_admin_password=admin
+      - system_scaling_maxconnectioncount=100
+    volumes:
+      - solace-data:/var/lib/solace
+
+  sentinel-app:
+    container_name: sentinel-app
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      - solace
+    environment:
+      - SOLACE_BROKER_URL=ws://solace:8000
+      - SOLACE_BROKER_USERNAME=default
+      - SOLACE_BROKER_PASSWORD=default
+      - SOLACE_BROKER_VPN_NAME=default
+    volumes:
+      - .:/app
+
+volumes:
+  solace-data:
